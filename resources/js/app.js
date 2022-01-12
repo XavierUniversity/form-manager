@@ -3,6 +3,8 @@ require('./bootstrap');
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
+// Custom Components
+import ThemeSwitcher from "@/Components/ThemeSwitcher";
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Form Manager @ Xavier U.';
 
@@ -13,6 +15,7 @@ createInertiaApp({
         return createApp({ render: () => h(app, props) })
             .use(plugin)
             .mixin({ methods: { route } })
+            .mixin({ components : { ThemeSwitcher } })
             .mount(el);
     },
 });
