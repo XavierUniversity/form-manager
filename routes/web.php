@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\FormController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,5 +29,7 @@ Route::get('/', function () {
 Route::get('/', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('forms', FormController::class);
 
 require __DIR__.'/auth.php';
