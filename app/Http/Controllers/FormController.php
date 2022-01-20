@@ -22,12 +22,11 @@ class FormController extends Controller
      */
     public function index()
     {
-        $user_id = Auth::id();
-        $forms = Form::where('user_id', $user_id)->paginate(20);
+        $user = Auth::user();
+        $forms = Form::whereBelongsTo($user)->paginate(20);
 
         return Inertia::render('Form/Index', [
             'forms' => $forms,
-            'user' => $user_id,
         ]);
     }
 
