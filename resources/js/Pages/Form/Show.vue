@@ -2,8 +2,11 @@
     <Head :title="'Viewing: ' + form.name" />
     <BreezeAuthenticatedLayout>
         <template #header>
+            Viewing: {{ form.name }}
+        </template>
+        <template #nav>
             <div class="flex">
-                <h2 class="text-lg">{{ form.name }}</h2>
+
                 <!--v-if="canedit"-->
                 <Link :href="route('forms.edit', form.id)" class="underline text-sm text-gray-600 hover:text-gray-900 mx-1 px-2 my-1">
                     Edit

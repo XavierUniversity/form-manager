@@ -2,7 +2,7 @@
     <Head title="Forms" />
     <BreezeAuthenticatedLayout>
         <template #header>
-            <h2>Forms</h2>
+            My Forms
         </template>
 
         <div class="py-12">

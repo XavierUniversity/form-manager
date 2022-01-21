@@ -1,8 +1,8 @@
 <template>
-    <Head title="Edit Form" />
+    <Head :title="'Editing Form: ' + form.name" />
     <BreezeAuthenticatedLayout>
         <template #header>
-            <h2>Editing Form: {{ form.name }}</h2>
+            Editing Form: {{ form.name }}
         </template>
 
         <div class="py-12">
