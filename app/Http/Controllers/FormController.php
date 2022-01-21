@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+// Models
 use App\Models\Form;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+// Additional Libraries
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 class FormController extends Controller
 {
@@ -37,7 +40,7 @@ class FormController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Form/Create');
     }
 
     /**
@@ -48,7 +51,14 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Form::create(
+            $request->validate([
+                'name' => 'required',
+                'description' => 'required',
+            ])
+        );
+
+        return redirect()->route('forms.index');
     }
 
     /**
@@ -60,6 +70,9 @@ class FormController extends Controller
     public function show(Form $form)
     {
         //
+        return Inertia::render('Form/Show', [
+            'form' => $form
+        ]);
     }
 
     /**
@@ -71,6 +84,9 @@ class FormController extends Controller
     public function edit(Form $form)
     {
         //
+        return Inertia::render('Form/Edit', [
+            'form' => $form
+        ]);
     }
 
     /**
@@ -82,7 +98,13 @@ class FormController extends Controller
      */
     public function update(Request $request, Form $form)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+        $form->update($data);
+
+        return redirect()->route('forms.show', $form);
     }
 
     /**
@@ -93,6 +115,8 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
-        //
+        $form->delete();
+
+        return redirect()->route('forms.index');
     }
 }
