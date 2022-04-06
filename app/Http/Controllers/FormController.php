@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 // Models
 use App\Models\Form;
+use App\Models\FormFieldForms;
+use App\Models\FormFields;
 use App\Models\User;
 // Additional Libraries
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,14 +54,22 @@ class FormController extends Controller
      */
     public function store(Request $request)
     {
-        Form::create(
-            $request->validate([
-                'name' => 'required',
-                'description' => 'required',
-            ])
+        $data = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
+        $user = Auth::user();
+
+        $form = Form::create(
+            [
+                'user_id' => $user->id,
+                'name' => $data['name'],
+                'description' => $data['description'],
+            ]
         );
 
-        return redirect()->route('forms.index');
+        return redirect()->route('forms.edit', $form->id);
     }
 
     /**
@@ -70,6 +81,7 @@ class FormController extends Controller
     public function show(Form $form)
     {
         //
+        $form = Form::with(['FormFieldForms.formfield'])->find($form->id);
         return Inertia::render('Form/Show', [
             'form' => $form
         ]);
@@ -83,9 +95,12 @@ class FormController extends Controller
      */
     public function edit(Form $form)
     {
+        $fields = FormFields::all('id', 'name');
+        $form = Form::with(['FormFieldForms'])->find($form->id);
         //
         return Inertia::render('Form/Edit', [
-            'form' => $form
+            'formDetails' => $form,
+            'formFields' => $fields
         ]);
     }
 
