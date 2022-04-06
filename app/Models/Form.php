@@ -12,6 +12,7 @@ class Form extends Model
     protected $fillable = [
         'name',
         'description',
+        'user_id',
     ];
 
     protected $dates = [
@@ -23,5 +24,20 @@ class Form extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function formfieldforms()
+    {
+        return $this->hasMany(FormFieldForms::class);
+    }
+
+    public function formfield(){
+        return $this->hasOneThrough(
+            FormFields::class,
+            FormFieldForms::class,
+            'form_id',
+            'id',
+            'id',
+            'form_field_id',
+        );
+    }
     use HasFactory;
 }
