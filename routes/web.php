@@ -1,5 +1,7 @@
 <?php
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\FormFieldsController;
+use App\Http\Controllers\FormFieldFormsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,11 +27,8 @@ Route::get('/', function () {
     ]);
 });
 */
-
-Route::get('/', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('/', [FormController::class, 'index']);
 Route::resource('forms', FormController::class);
-
+Route::resource('fields', FormFieldsController::class);
+Route::resource('form_fields', FormFieldFormsController::class);
 require __DIR__.'/auth.php';
