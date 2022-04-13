@@ -40,13 +40,39 @@
                         <form @submit.prevent>
                             <div class="" v-for="field in form.form_field_forms" :key="field.id">
                                 <div class="flex mt-2">
-                                    <BreezeLabel for="field.id" :value="field.name" class="flex-initial w-32" />
-                                    <div v-if="field.formfield.element == 'input'">
-                                        <input name="" class="border rounded p-2" placeholder="" />
+                                    <BreezeLabel :for="field.id" :value="field.name" class="flex-initial w-32" />
+                                    <div v-if="field.formfield.type == 'radio' || field.formfield.type == 'checkbox'">
+                                        <label v-for="option in field.options.split(',')" :key="option" class="block">
+                                            <input :type="field.formfield.type" :name="field.id" :value="option" />
+                                            {{ option }}
+                                        </label>
+                                        <p class="text-sm mt-1">{{ field.caption }}</p>
+                                    </div>
+                                    <div v-else-if="field.formfield.element == 'select'">
+                                        <select :name="field.id" :id="field.id">
+                                            <option>--</option>
+                                            <option v-for="option in field.options.split(',')" :key="option" :value="option">
+                                                {{ option }}
+                                            </option>
+                                        </select>
+                                        <p class="text-sm mt-1">{{ field.caption }}</p>
+                                    </div>
+                                    <div v-else-if="field.formfield.element == 'textarea'">
+                                        <textarea :name="field.id" :id="field.id" />
+                                        <p class="text-sm mt-1">{{ field.caption }}</p>
+                                    </div>
+                                    <div v-else-if="field.formfield.element == 'p'">
+                                        {{ options }}
+                                        <p class="text-sm mt-1">{{ field.caption }}</p>
+                                    </div>
+                                    <div v-else-if="field.formfield.type == 'hidden'">
+                                        <p class="text-sm mt-1">This field is hidden from public consumption, but is presented here for internal visibility.</p>
+                                    </div>
+                                    <div v-else-if="field.formfield.element == 'input'">
+                                        <input :name="field.id" :id="field.id" class="border rounded p-2" :type="field.formfield.type" />
                                         <p class="text-sm mt-1">{{ field.caption }}</p>
                                     </div>
                                 </div>
-                                <pre>{{ field }}</pre>
                             </div>
                         </form>
                     </div>

@@ -54,6 +54,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="my-4">
+                    <h2>Add a field:</h2>
+                    <!-- Pass in a :form_id, default to a "1" on the form_field_id, everything else is null or default -->
+                    <AddNewField :formId="formDetails.id" class="mt-3 px-4 py-2 border-2 border-navy inline-block rounded hover:bg-lightBlue hover:border-lightBlue text-navy hover:text-white">
+                        Add Field
+                    </AddNewField>
+                </div>
             </div>
         </div>
     </BreezeAuthenticatedLayout>
